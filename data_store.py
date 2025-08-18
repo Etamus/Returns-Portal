@@ -1,31 +1,16 @@
 # data_store.py
-
-# Simula uma tabela de notas fiscais no sistema
 DADOS_NOTAS_FISCAIS = {
     "10184586": {
-        "cod_cliente": "5039",
+        "cod_cliente": "0000005039",
         "nome_cliente": "MAQ TEC COMERCIO DE PECAS",
         "itens": [
-            {
-                "material": "W11300698",
-                "descricao": "MECANISMO KIT",
-                "qtde_total": 4,
-                "qtde_disponivel": 3,
-            },
-            # Poderiam haver outros itens nesta mesma nota fiscal
+            {"material": "W11300698", "cod_item": "00038532 - 000", "descricao": "MECANISMO KIT", "subfamilia": "Mecanismos", "qtde_total": 4, "qtde_disponivel": 3},
+            {"material": "W10347201", "cod_item": "00038531 - 000", "descricao": "PRATELEIRA MULTIUSO SERIG NA (C+F)", "subfamilia": "Prateleiras", "qtde_total": 10, "qtde_disponivel": 10}
         ]
     }
 }
-
-# Simula os motivos de devolução que podem ser escolhidos
 MOTIVOS_DEVOLUCAO = [
-    "90 (Não Solicitou a Peça)",
-    "177 (Defeito Funcional - Ruído)",
-    "167 (Avaria Quebrada)",
-    "104 (Código Trocado)",
+    "(90) - Não solicitou a peça", "(177) - Defeito Funcional - Ruído",
+    "(167) - Avaria Quebrada", "(104) - Código Trocado",
 ]
-
-
-def consultar_nota_fiscal(numero_nf):
-    """Função que simula a busca dos dados da NF no sistema."""
-    return DADOS_NOTAS_FISCAIS.get(numero_nf, None)
+def consultar_nota_fiscal(numero_nf): return DADOS_NOTAS_FISCAIS.get(numero_nf, None)

@@ -3,98 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
     <title>Portal de Devolução</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=final">
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <div class="app-container">
-        <nav class="sidebar">
-            <div class="sidebar-header">PORTAL DEVOLUÇÃO</div>
-            <ul class="menu-list">
-                <li>
-                    <a href="#" class="menu-item" data-target="solicitacoes-submenu">
-                        <i data-feather="package"></i> Solicitações
-                    </a>
-                    <ul id="solicitacoes-submenu" class="submenu active">
-                        <li><a href="#" class="submenu-item active" data-page="page-acompanhar">Acompanhar Solicitações</a></li>
-                        <li><a href="#" class="submenu-item" data-page="page-nova-solicitacao">Nova Solicitação</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="menu-item" data-target="setores-submenu">
-                        <i data-feather="briefcase"></i> Setores
-                    </a>
-                    <ul id="setores-submenu" class="submenu"></ul>
-                </li>
-                 <li>
-                    <a href="#" class="menu-item" data-target="acessos-submenu">
-                        <i data-feather="users"></i> Acessos
-                    </a>
-                    <ul id="acessos-submenu" class="submenu"></ul>
-                </li>
-            </ul>
-        </nav>
-
+        <nav class="sidebar"></nav>
         <main class="main-content">
             <header class="main-header"></header>
-            <div id="page-acompanhar" class="page active">
-                <h1 class="page-title">Acompanhar Solicitações</h1>
-                <div class="filter-area">
-                    <div class="filter-row">
-                        <div class="form-group search-group">
-                            <label for="search-input">Pesquisar</label>
-                            <input type="text" id="search-input" placeholder="Pesquise por Código, Material, Cliente...">
-                        </div>
-                        <div class="form-group filter-group">
-                            <label for="filter-combo">Filtro</label>
-                            <div class="custom-select">
-                                <select id="filter-combo">
-                                    <option>Código de Solicitação</option>
-                                    <option>Material</option>
-                                    <option>Cliente</option>
-                                    <option>Nota Fiscal</option>
-                                    <option>Motivo</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="icon-button" id="search-btn"><i data-feather="search"></i></button>
-                        <button class="icon-button" id="export-btn"><i data-feather="file-text"></i></button>
-                    </div>
-                    <div class="filter-row">
-                        <div class="form-group date-group">
-                            <label for="date-start">Data Inicial</label>
-                            <input type="text" id="date-start" placeholder="DD/MM/AAAA">
-                        </div>
-                        <div class="form-group date-group">
-                            <label for="date-end">Data Final</label>
-                            <input type="text" id="date-end" placeholder="DD/MM/AAAA">
-                        </div>
-                    </div>
-                </div>
-                <div id="solicitacoes-list" class="solicitacoes-list">
-                    <div id="empty-list-message">Nenhuma solicitação para exibir.</div>
-                </div>
-            </div>
-            
-            <div id="page-nova-solicitacao" class="page">
-                <h1 class="page-title">Nova Solicitação</h1>
-                <div class="consulta-nf-area">
-                    <div class="form-group">
-                        <label for="nf-input">Nota Fiscal</label>
-                        <input type="text" id="nf-input" placeholder="Digite o nº da NF">
-                    </div>
-                    <button class="button" id="consultar-nf-btn">Consultar</button>
-                </div>
-                <div id="nf-results-area"></div>
-            </div>
+            <div id="page-acompanhar" class="page active"></div>
+            <div id="page-nova-solicitacao" class="page"></div>
         </main>
     </div>
-
+    <div class="modal-overlay" id="cart-modal-overlay"></div>
+    
     <script type="text/javascript" src="/eel.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=final"></script>
+
+    <script>
+        document.querySelector('.sidebar').innerHTML = `<div class="sidebar-header">PORTAL DEVOLUÇÃO</div> <ul class="menu-list"> <li> <a href="#" class="menu-item" data-target="solicitacoes-submenu"><i data-feather="package"></i> Solicitações</a> <ul id="solicitacoes-submenu" class="submenu active"> <li><a href="#" class="submenu-item active" data-page="page-acompanhar">Acompanhar Solicitações</a></li> <li><a href="#" class="submenu-item" data-page="page-nova-solicitacao">Nova Solicitação</a></li> </ul> </li> <li><a href="#" class="menu-item" data-target="setores-submenu"><i data-feather="briefcase"></i> Setores</a><ul id="setores-submenu" class="submenu"></ul></li> <li><a href="#" class="menu-item" data-target="acessos-submenu"><i data-feather="users"></i> Acessos</a><ul id="acessos-submenu" class="submenu"></ul></li> </ul>`;
+        document.getElementById('page-acompanhar').innerHTML = `<h1 class="page-title">Acompanhar Solicitações</h1> <div class="filter-area"> <div class="filter-row"> <div class="form-group search-group"><label for="search-input">Pesquisar</label><input type="text" id="search-input" placeholder="Pesquise por Código, Material, Cliente..."></div> <div class="form-group filter-group"> <label for="filter-combo">Filtro</label> <div class="custom-select"> <select id="filter-combo"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option><option>Nota Fiscal</option><option>Motivo</option></select> </div> </div> <button class="icon-button" id="search-btn"><i data-feather="search"></i></button> <button class="icon-button" id="export-btn"><i data-feather="file-text"></i></button> </div> <div class="filter-row"> <div class="form-group date-group"><label for="date-start">Data Inicial</label><input type="text" id="date-start" placeholder="DD/MM/AAAA"></div> <div class="form-group date-group"><label for="date-end">Data Final</label><input type="text" id="date-end" placeholder="DD/MM/AAAA"></div> </div> </div> <div id="solicitacoes-list" class="solicitacoes-list"> <div id="empty-list-message">Nenhuma solicitação para exibir.</div> </div>`;
+        document.getElementById('page-nova-solicitacao').innerHTML = `<div class="page-header"> <h1 class="page-title">Nova Solicitação</h1> <div class="cart-icon-wrapper" id="cart-icon"> <i data-feather="shopping-cart"></i> <span class="cart-counter" id="cart-counter">0</span> </div> </div> <div class="consulta-nf-area"> <div class="form-group"> <label for="nf-input">Nota Fiscal</label> <input type="text" id="nf-input" placeholder="Digite o nº da NF"> </div> <button class="button" id="consultar-nf-btn">Consultar</button> </div> <div id="nf-results-area"></div>`;
+        document.getElementById('cart-modal-overlay').innerHTML = `<div class="modal-content"> <div class="modal-header"> <h2>Carrinho</h2> <button class="close-modal-btn" id="close-cart-btn"><i data-feather="x"></i></button> </div> <div class="modal-body" id="cart-items-list"></div> <div class="modal-footer"> <button class="button cancel" id="cancelar-carrinho-btn">CANCELAR</button> <button class="button primary" id="finalizar-btn">FINALIZAR</button> </div> </div>`;
+    </script>
 </body>
 </html>
