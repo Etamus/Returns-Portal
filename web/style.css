@@ -1,6 +1,6 @@
 /* web/style.css */
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
-:root { --bg-main: #f4f6f9; --bg-content: #ffffff; --bg-sidebar: #343a40; --border-color: #dee2e6; --text-primary: #343a40; --text-secondary: #6c757d; --text-sidebar: #adb5bd; --accent-orange: #fd7e14; --accent-purple: #8A2BE2; --accent-blue: #007bff; --accent-red: #dc3545; --accent-orange-dark: #E67E22; --accent-green: #28a745; }
+:root { --bg-main: #f4f6f9; --bg-content: #ffffff; --bg-sidebar: #343a40; --border-color: #dee2e6; --text-primary: #343a40; --text-secondary: #6c757d; --text-sidebar: #adb5bd; --accent-orange: #fd7e14; --accent-purple: #8A2BE2; --accent-blue: #007bff; --accent-red: #dc3545; --accent-orange-dark: #E67E22; --accent-green: #28a745; --yellow: #ffc107; --gray: #6c757d;}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-main); color: var(--text-primary); overflow: hidden; }
 .app-container { display: flex; height: 100vh; }
@@ -28,20 +28,27 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-ma
 .solicitacoes-list { display: flex; flex-direction: column; gap: 10px; }
 .empty-list-message { text-align: center; color: var(--text-secondary); padding: 40px; }
 .solicitacao-card { background-color: var(--bg-content); border: 1px solid var(--border-color); border-radius: 5px; font-size: 14px; }
-.card-summary { display: flex; justify-content: space-between; padding: 20px; }
-.solicitacao-card.expandable .card-summary { cursor: pointer; }
+.card-summary { display: flex; justify-content: space-between; padding: 20px; cursor: pointer; }
 .card-column-left, .card-column-right { display: flex; flex-direction: column; gap: 12px; }
 .card-column-left { flex-grow: 1; }
 .card-column-right { align-items: flex-end; text-align: right; }
 .solicitacao-card .status { color: var(--accent-orange-dark); font-weight: bold; }
 .solicitacao-card .analise { color: var(--accent-blue); font-weight: bold; }
 .arrow-icon { margin-top: auto; color: var(--text-secondary); transition: transform 0.3s ease-out; }
-.card-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out, border 0.4s ease-out; padding: 0 20px; border-top: 1px solid transparent; display: flex; gap: 20px; }
-.solicitacao-card.expanded .card-details { max-height: 300px; padding: 20px; border-top: 1px solid var(--border-color); }
+.card-details { max-height: 0; overflow: hidden; transition: all 0.4s ease-out; padding: 0 20px; border-top: 1px solid transparent; }
+.solicitacao-card.expanded .card-details { max-height: 500px; padding: 20px; border-top: 1px solid var(--border-color); }
 .solicitacao-card.expanded .arrow-icon { transform: rotate(180deg); }
+.detail-content { display: flex; gap: 20px; }
 .detail-item { flex: 1; }
 .detail-item b { color: var(--text-primary); display: block; margin-bottom: 5px;}
 .detail-item .anexo-imagem { width: 150px; height: 150px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color); cursor: pointer; }
+.approval-section { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+.approval-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
+.reproval-reason { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+.reproval-reason.visible { max-height: 200px; }
+.status-aprovado { color: var(--accent-green) !important; font-weight: bold; }
+.status-reprovado { color: var(--accent-red) !important; font-weight: bold; }
+.approval-info { margin-top: 15px; font-size: 13px; color: var(--text-secondary); border-left: 3px solid var(--border-color); padding-left: 15px; }
 .consulta-nf-area { display: flex; align-items: flex-end; gap: 15px; margin-bottom: 20px; }
 #nf-results-area { display: flex; flex-direction: column; gap: 5px; }
 .item-list-header, .item-row .item-summary { display: grid; grid-template-columns: 40px 1fr 2fr 100px 100px; align-items: center; gap: 15px; padding: 10px 15px; }
@@ -94,3 +101,57 @@ select { appearance: none; -webkit-appearance: none; }
 .image-modal-content { position: relative; line-height: 0; max-width: 90vw; max-height: 90vh; }
 #modal-image { max-width: 100%; max-height: 100%; border-radius: 5px; }
 .image-modal-content .close-modal-btn { position: absolute; top: -15px; right: -15px; background-color: white; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+/* --- NOVO: Estilos da Linha do Tempo --- */
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 10px 0;
+}
+.timeline-step {
+    text-align: center;
+    position: relative;
+    flex: 1;
+}
+.timeline-step .icon {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    margin: 0 auto 5px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border: 2px solid;
+    background-color: white;
+}
+.timeline-step .label { font-weight: 600; color: var(--text-primary); }
+.timeline-step .date { color: var(--text-secondary); }
+
+/* Linhas de conexão */
+.timeline-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    transform: translateX(12px);
+}
+
+/* Cores dos status */
+.timeline-step.completed .icon { background-color: var(--accent-green); border-color: var(--accent-green); }
+.timeline-step.completed::after { background-color: var(--accent-green); }
+
+.timeline-step.in-progress .icon { background-color: var(--yellow); border-color: var(--yellow); }
+.timeline-step.in-progress::after { background-color: var(--border-color); }
+
+.timeline-step.pending .icon { border-color: var(--border-color); }
+.timeline-step.pending::after { background-color: var(--border-color); }
+
+.timeline-step.reproved .icon { background-color: var(--accent-red); border-color: var(--accent-red); }
+.timeline-step.reproved::after { background-color: var(--border-color); }
+
+/* Oculta a linha do último item */
+.timeline-step:last-child::after { display: none; }
