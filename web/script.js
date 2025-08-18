@@ -71,36 +71,35 @@ try {
                         qtySpan.textContent = qtdAtual + qtdDevolvida;
                     }
                 });
+
                 carrinho = [];
                 updateCartView();
+                
                 document.querySelectorAll('.item-row.added-to-cart').forEach(row => {
                     row.classList.remove('added-to-cart');
                     const iconContainer = row.querySelector('.icon-container');
                     if(iconContainer) iconContainer.innerHTML = `<i data-feather="plus-circle"></i>`;
                 });
+
                 feather.replace();
                 cartModalOverlay.classList.remove('visible');
             }
         });
 
         finalizarBtn.addEventListener('click', async () => {
-            try {
-                if (carrinho.length === 0) return;
-                carrinho.forEach(item => submittedMaterials.add(item.material));
-                const promises = carrinho.map(item => eel.criar_nova_solicitacao(item)());
-                const novasSolicitacoes = await Promise.all(promises);
-                novasSolicitacoes.forEach(addSolicitacaoCard);
-                alert(`${carrinho.length} solicitação(ões) criada(s) com sucesso!`);
-                carrinho = [];
-                dadosOriginaisNF = null;
-                updateCartView();
-                cartModalOverlay.classList.remove('visible');
-                nfInput.value = '';
-                resultsArea.innerHTML = '';
-            } catch (error) {
-                console.error("Erro ao finalizar o carrinho:", error);
-                alert("Ocorreu um erro ao finalizar o carrinho. Por favor, verifique o console (F12) para mais detalhes.");
-            }
+            if (carrinho.length === 0) return;
+            carrinho.forEach(item => submittedMaterials.add(item.material));
+            const promises = carrinho.map(item => eel.criar_nova_solicitacao(item)());
+            const novasSolicitacoes = await Promise.all(promises);
+            novasSolicitacoes.forEach(addSolicitacaoCard);
+            alert(`${carrinho.length} solicitação(ões) criada(s) com sucesso!`);
+            
+            carrinho = [];
+            dadosOriginaisNF = null;
+            updateCartView();
+            cartModalOverlay.classList.remove('visible');
+            nfInput.value = '';
+            resultsArea.innerHTML = '';
         });
 
         consultarBtn.addEventListener('click', async () => {
@@ -165,7 +164,7 @@ try {
                     }
                     const itemData = dadosOriginaisNF.itens[index];
                     const itemParaCarrinho = {
-                        index: index,
+                        index: index, // Guarda o índice para a lógica de cancelamento
                         nota_fiscal: nfInput.value, cod_cliente: dadosOriginaisNF.cod_cliente, nome_cliente: dadosOriginaisNF.nome_cliente,
                         material: itemData.material, cod_item: itemData.cod_item, descricao: itemData.descricao,
                         motivo: form.querySelector(`#motivo-${index}`).value,
@@ -182,11 +181,13 @@ try {
                     row.classList.add('added-to-cart');
                     row.querySelector('.icon-container').innerHTML = `<i data-feather="check-circle"></i>`;
                     feather.replace();
+                    
                     const qtySpan = row.querySelector('.qty-disponivel');
                     qtySpan.textContent = parseInt(qtySpan.textContent) - parseInt(itemParaCarrinho.quantidade);
                 }
             });
 
+            data.itens.forEach((item, index) => { /* ... código de validação ... */ });
             data.itens.forEach((item, index) => {
                 const form = document.getElementById(`details-form-${index}`);
                 const addItemBtn = form.querySelector('.add-item-btn');
@@ -202,69 +203,9 @@ try {
             });
         }
 
-        function generateFormHtml(item, motivos, index) { let motivosOptions = `<option value="" disabled selected hidden>Selecione um motivo...</option>` + motivos.map(m => `<option value="${m}">${m}</option>`).join(''); return `<h4>${item.descricao}</h4><div class="details-form-grid"><div class="form-group"><label>Material</label><input type="text" value="${item.material}" readonly></div><div class="form-group"><label>Informe a Quantidade</label><input type="number" id="quantidade-${index}" placeholder="Ex: ${item.qtde_disponivel}" max="${item.qtde_disponivel}" min="1"></div><div class="form-group" style="grid-column: 1 / -1;"><label>Motivos</label><div class="custom-select"><select id="motivo-${index}">${motivosOptions}</select></div></div><div class="form-group" style="grid-column: 1 / -1;"><label>Foto da Peça</label><input type="file" class="file-input" accept="image/*" hidden><button class="button small file-btn">SELECIONAR ARQUIVO</button></div><div class="form-group" style="grid-column: 1 / -1;"><label>Observação</label><textarea id="observacao-${index}" placeholder="Descreva o ocorrido..."></textarea></div></div><div class="form-actions"><button class="button cancel">CANCELAR</button><button class="button primary add-item-btn" data-index="${index}" disabled>ADICIONAR ITEM</button></div>`; }
-
-        // --- LÓGICA DO CARD EXPANSÍVEL E MODAL DE IMAGEM ---
-        closeImageBtn.addEventListener('click', () => imageModalOverlay.classList.remove('visible'));
-        imageModalOverlay.addEventListener('click', (e) => { if(e.target === imageModalOverlay) imageModalOverlay.classList.remove('visible'); });
+        function generateFormHtml(item, motivos, index) { /* ... */ }
+        function addSolicitacaoCard(data) { /* ... */ }
         
-        solicitacoesList.addEventListener('click', (e) => {
-            const summary = e.target.closest('.card-summary');
-            const thumbnail = e.target.closest('.anexo-imagem');
-
-            if (thumbnail) {
-                e.stopPropagation();
-                modalImage.src = thumbnail.src;
-                imageModalOverlay.classList.add('visible');
-                feather.replace();
-            } else if (summary) {
-                const card = summary.closest('.solicitacao-card');
-                card.classList.toggle('expanded');
-            }
-        });
-
-        function addSolicitacaoCard(data) {
-            if (emptyMessage) emptyMessage.style.display = 'none';
-            const card = document.createElement('div');
-            card.className = 'solicitacao-card';
-            card.dataset.codSolicitacao = data.cod_solicitacao;
-            card.dataset.material = data.material;
-            card.dataset.cliente = data.nome_cliente;
-            card.dataset.notaFiscal = data.nota_fiscal;
-            card.dataset.motivo = data.motivo;
-            
-            let anexoHtml = `<div class="detail-item"><b>Anexo:</b><span>Nenhum anexo.</span></div>`;
-            if (data.anexo_path && data.anexo_path !== "Nenhum anexo") {
-                anexoHtml = `<div class="detail-item"><b>Anexo:</b><img class="anexo-imagem" src="${data.anexo_path}" alt="Anexo"></div>`;
-            }
-
-            card.innerHTML = `
-                <div class="card-summary">
-                    <div class="card-column-left">
-                        <span><b>Cód. Solicitação:</b> ${data.cod_solicitacao}</span>
-                        <span class="status">${data.motivo}</span>
-                        <span>${data.nome_cliente}</span>
-                        <i class="arrow-icon" data-feather="chevron-down"></i>
-                    </div>
-                    <div class="card-column-right">
-                        <span><b>Nota Fiscal:</b> ${data.nota_fiscal}</span>
-                        <span><b>Peça:</b> ${data.material}</span>
-                        <span><b>Data:</b> ${data.data}</span>
-                        <span class="analise">EM ANÁLISE</span>
-                    </div>
-                </div>
-                <div class="card-details">
-                    ${anexoHtml}
-                    <div class="detail-item">
-                        <b>Observação:</b>
-                        <span>${data.observacao || "Nenhuma observação."}</span>
-                    </div>
-                </div>`;
-            solicitacoesList.prepend(card);
-            feather.replace();
-        }
-        
-        // --- LÓGICA DE FILTRAGEM ---
         function applyFilters() {
             const searchTerm = searchInput.value.toLowerCase();
             const filterType = filterCombo.value;
@@ -279,13 +220,17 @@ try {
                     case 'Motivo': textToSearch = card.dataset.motivo; break;
                 }
                 if (textToSearch.toLowerCase().includes(searchTerm)) {
-                    card.style.display = 'block'; visibleCount++;
+                    card.style.display = 'flex'; visibleCount++;
                 } else { card.style.display = 'none'; }
             });
             emptyMessage.style.display = visibleCount > 0 ? 'none' : 'block';
         }
         searchInput.addEventListener('input', applyFilters);
         filterCombo.addEventListener('change', applyFilters);
+        
+        // Colar aqui o restante das funções
+        generateFormHtml = (item, motivos, index) => { let motivosOptions = `<option value="" disabled selected hidden>Selecione um motivo...</option>` + motivos.map(m => `<option value="${m}">${m}</option>`).join(''); return `<h4>${item.descricao}</h4><div class="details-form-grid"><div class="form-group"><label>Material</label><input type="text" value="${item.material}" readonly></div><div class="form-group"><label>Informe a Quantidade</label><input type="number" id="quantidade-${index}" placeholder="Ex: ${item.qtde_disponivel}" max="${item.qtde_disponivel}" min="1"></div><div class="form-group" style="grid-column: 1 / -1;"><label>Motivos</label><div class="custom-select"><select id="motivo-${index}">${motivosOptions}</select></div></div><div class="form-group" style="grid-column: 1 / -1;"><label>Foto da Peça</label><input type="file" class="file-input" accept="image/*" hidden><button class="button small file-btn">SELECIONAR ARQUIVO</button></div><div class="form-group" style="grid-column: 1 / -1;"><label>Observação</label><textarea id="observacao-${index}" placeholder="Descreva o ocorrido..."></textarea></div></div><div class="form-actions"><button class="button cancel">CANCELAR</button><button class="button primary add-item-btn" data-index="${index}" disabled>ADICIONAR ITEM</button></div>`; };
+        addSolicitacaoCard = (data) => { if (emptyMessage) emptyMessage.style.display = 'none'; const card = document.createElement('div'); card.className = 'solicitacao-card'; card.dataset.codSolicitacao = data.cod_solicitacao; card.dataset.material = data.material; card.dataset.cliente = data.nome_cliente; card.dataset.notaFiscal = data.nota_fiscal; card.dataset.motivo = data.motivo; let anexoHtml = `<div class="detail-item"><b>Anexo:</b><span>Nenhum anexo.</span></div>`; if (data.anexo_path && data.anexo_path !== "Nenhum anexo") { anexoHtml = `<div class="detail-item"><b>Anexo:</b><img class="anexo-imagem" src="${data.anexo_path}" alt="Anexo"></div>`; } card.innerHTML = `<div class="card-summary"><div class="card-column-left"><span><b>Cód. Solicitação:</b> ${data.cod_solicitacao}</span><span class="status">${data.motivo}</span><span>${data.nome_cliente}</span><i class="arrow-icon" data-feather="chevron-down"></i></div><div class="card-column-right"><span><b>Nota Fiscal:</b> ${data.nota_fiscal}</span><span><b>Peça:</b> ${data.material}</span><span><b>Data:</b> ${data.data}</span><span class="analise">EM ANÁLISE</span></div></div><div class="card-details">${anexoHtml}<div class="detail-item"><b>Observação:</b><span>${data.observacao || "Nenhuma observação."}</span></div></div>`; solicitacoesList.prepend(card); feather.replace(); };
     });
 } catch (error) {
     alert("Ocorreu um erro crítico. Por favor, abra o console (F12) e envie uma captura de tela do erro.");
