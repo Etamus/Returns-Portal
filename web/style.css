@@ -26,9 +26,10 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-ma
 .filter-group { flex: 2 1 0; }
 .date-group input { width: 160px; }
 .solicitacoes-list { display: flex; flex-direction: column; gap: 10px; }
-#empty-list-message { text-align: center; color: var(--text-secondary); padding: 40px; }
+.empty-list-message { text-align: center; color: var(--text-secondary); padding: 40px; }
 .solicitacao-card { background-color: var(--bg-content); border: 1px solid var(--border-color); border-radius: 5px; font-size: 14px; }
-.card-summary { display: flex; justify-content: space-between; padding: 20px; cursor: pointer; }
+.card-summary { display: flex; justify-content: space-between; padding: 20px; }
+.solicitacao-card.expandable .card-summary { cursor: pointer; }
 .card-column-left, .card-column-right { display: flex; flex-direction: column; gap: 12px; }
 .card-column-left { flex-grow: 1; }
 .card-column-right { align-items: flex-end; text-align: right; }
@@ -70,7 +71,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .button.small { padding: 6px 12px; height: auto; align-self: flex-start; }
 .button:disabled { background-color: #e9ecef; color: var(--text-secondary); cursor: not-allowed; border-color: var(--border-color); }
 .icon-button { background-color: transparent; border: 1px solid var(--accent-purple); color: var(--accent-purple); width: 38px; height: 38px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-#export-btn { border-color: #28a745; color: #28a745; }
+#export-btn, .export-btn-setor { border-color: var(--accent-green); color: var(--accent-green); }
 .custom-select { position: relative; }
 .custom-select::after { content: ''; position: absolute; top: 50%; right: 10px; transform: translateY(-50%); pointer-events: none; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
 select { appearance: none; -webkit-appearance: none; }
@@ -90,7 +91,6 @@ select { appearance: none; -webkit-appearance: none; }
 .cart-item-info .material { font-weight: bold; }
 .cart-item-info .motivo { font-size: 12px; color: var(--text-secondary); }
 .cart-item-qty { font-weight: bold; }
-/* --- CORREÇÃO: Estilo do Modal de Imagem --- */
 .image-modal-content { position: relative; line-height: 0; max-width: 90vw; max-height: 90vh; }
 #modal-image { max-width: 100%; max-height: 100%; border-radius: 5px; }
 .image-modal-content .close-modal-btn { position: absolute; top: -15px; right: -15px; background-color: white; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
