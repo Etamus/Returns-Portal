@@ -40,7 +40,7 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-ma
 .solicitacao-card.expanded .arrow-icon { transform: rotate(180deg); }
 .detail-item { flex: 1; }
 .detail-item b { color: var(--text-primary); display: block; margin-bottom: 5px;}
-.detail-item img { max-width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border-color); }
+.detail-item .anexo-imagem { width: 150px; height: 150px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color); cursor: pointer; }
 .consulta-nf-area { display: flex; align-items: flex-end; gap: 15px; margin-bottom: 20px; }
 #nf-results-area { display: flex; flex-direction: column; gap: 5px; }
 .item-list-header, .item-row .item-summary { display: grid; grid-template-columns: 40px 1fr 2fr 100px 100px; align-items: center; gap: 15px; padding: 10px 15px; }
@@ -72,33 +72,25 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .icon-button { background-color: transparent; border: 1px solid var(--accent-purple); color: var(--accent-purple); width: 38px; height: 38px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 #export-btn { border-color: #28a745; color: #28a745; }
 .custom-select { position: relative; }
-/* --- CORREÇÃO: Substitui o 'content' por uma imagem de fundo SVG --- */
-.custom-select::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none;
-    width: 20px;
-    height: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-}
+.custom-select::after { content: ''; position: absolute; top: 50%; right: 10px; transform: translateY(-50%); pointer-events: none; width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
 select { appearance: none; -webkit-appearance: none; }
 .cart-icon-wrapper { position: relative; cursor: pointer; margin-right: 20px; }
 .cart-counter { position: absolute; top: -5px; right: -8px; background-color: var(--accent-red); color: white; font-size: 11px; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border: 1px solid white; }
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
 .modal-overlay.visible { display: flex; }
 .modal-content { background-color: var(--bg-content); border-radius: 8px; width: 90%; max-width: 600px; max-height: 90vh; display: flex; flex-direction: column; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--border-color); }
 .modal-body { padding: 20px; overflow-y: auto; }
 .modal-footer { display: flex; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid var(--border-color); }
-.close-modal-btn { background: none; border: none; cursor: pointer; padding: 5px; }
+.close-modal-btn { background: none; border: none; cursor: pointer; padding: 5px; color: var(--text-secondary); }
+.close-modal-btn:hover { color: var(--text-primary); }
 .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
 .cart-item:last-child { border-bottom: none; }
 .cart-item-info span { display: block; }
 .cart-item-info .material { font-weight: bold; }
 .cart-item-info .motivo { font-size: 12px; color: var(--text-secondary); }
 .cart-item-qty { font-weight: bold; }
+/* --- CORREÇÃO: Estilo do Modal de Imagem --- */
+.image-modal-content { position: relative; line-height: 0; max-width: 90vw; max-height: 90vh; }
+#modal-image { max-width: 100%; max-height: 100%; border-radius: 5px; }
+.image-modal-content .close-modal-btn { position: absolute; top: -15px; right: -15px; background-color: white; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }

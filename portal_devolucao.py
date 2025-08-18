@@ -5,11 +5,9 @@ import base64
 import os
 import uuid
 
-# --- NOVO: Garante que a pasta de uploads exista ---
 UPLOADS_DIR = os.path.join('web', 'uploads')
 if not os.path.exists(UPLOADS_DIR):
     os.makedirs(UPLOADS_DIR)
-# --- FIM DA NOVIDADE ---
 
 from data_store import consultar_nota_fiscal, MOTIVOS_DEVOLUCAO
 
@@ -28,31 +26,20 @@ def buscar_dados_nf(numero_nf):
 @eel.expose
 def criar_nova_solicitacao(dados_solicitacao):
     global id_solicitacao_counter
-
-    # --- NOVO: Lógica para salvar a imagem ---
     anexo_path = "Nenhum anexo"
     if dados_solicitacao.get('anexo_data') and dados_solicitacao.get('anexo_filename'):
         try:
-            # Extrai o tipo e os dados da string base64
             header, encoded_data = dados_solicitacao['anexo_data'].split(',', 1)
-            # Decodifica os dados
             image_data = base64.b64decode(encoded_data)
-            # Pega a extensão do arquivo original
             file_extension = os.path.splitext(dados_solicitacao['anexo_filename'])[1]
-            # Cria um nome de arquivo único para evitar conflitos
             unique_filename = f"{uuid.uuid4()}{file_extension}"
-            
             full_path = os.path.join(UPLOADS_DIR, unique_filename)
             with open(full_path, 'wb') as f:
                 f.write(image_data)
-            
-            # O caminho relativo que o HTML usará
             anexo_path = os.path.join('uploads', unique_filename).replace("\\", "/")
-            print(f"Imagem salva em: {anexo_path}")
         except Exception as e:
             print(f"Erro ao salvar imagem: {e}")
             anexo_path = "Erro ao salvar anexo"
-    # --- FIM DA LÓGICA DA IMAGEM ---
 
     nova_solicitacao = {
         "cod_solicitacao": str(id_solicitacao_counter),
@@ -64,7 +51,7 @@ def criar_nova_solicitacao(dados_solicitacao):
         "material": dados_solicitacao["material"],
         "nota_fiscal": dados_solicitacao["nota_fiscal"],
         "observacao": dados_solicitacao["observacao"],
-        "anexo_path": anexo_path # Salva o caminho da imagem
+        "anexo_path": anexo_path
     }
     id_solicitacao_counter += 1
     solicitacoes_criadas.insert(0, nova_solicitacao)
@@ -73,7 +60,5 @@ def criar_nova_solicitacao(dados_solicitacao):
 print("Iniciando o Portal de Devolução... Acesse a janela que abrir.")
 
 caminho_opera_gx = r"C:\Users\Administrador\AppData\Local\Programs\Opera GX\opera.exe"
-
 argumentos_de_inicio = ['--app', '--window-size=1440,810', '--disk-cache-dir=null', '--media-cache-size=1', '--no-cache']
-
 eel.start('main.html', mode=caminho_opera_gx, cmdline_args=argumentos_de_inicio)
