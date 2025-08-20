@@ -24,7 +24,7 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-ma
 .filter-row { display: flex; align-items: flex-end; gap: 20px; }
 .search-group { flex: 3 1 0; }
 .filter-group { flex: 2 1 0; }
-.date-group { width: 180px; flex-shrink: 0; } /* Largura fixa para campos de data */
+.date-group { width: 180px; flex-shrink: 0; }
 .solicitacoes-list { display: flex; flex-direction: column; gap: 10px; }
 .empty-list-message { text-align: center; color: var(--text-secondary); padding: 40px; }
 .solicitacao-card { background-color: var(--bg-content); border: 1px solid var(--border-color); border-radius: 5px; font-size: 14px; }
@@ -119,3 +119,34 @@ select, .date-group input { appearance: none; -webkit-appearance: none; padding-
 .timeline-step.reproved .icon { background-color: var(--accent-red); border-color: var(--accent-red); }
 .timeline-step.reproved::after { background-color: var(--border-color); }
 .timeline-step:last-child::after { display: none; }
+/* --- ESTILOS DA TELA DE LOGIN --- */
+.login-page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background-color: var(--bg-main); }
+.login-box { background-color: var(--bg-content); padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+.login-box h1 { margin-bottom: 30px; font-size: 24px; color: var(--text-primary); }
+.login-box .form-group { text-align: left; margin-bottom: 20px; }
+.login-box .form-group label { text-transform: uppercase; font-size: 12px; }
+.input-with-icon { position: relative; }
+/* --- CORREÇÃO: Seletor do ícone corrigido para SVG --- */
+.input-with-icon svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    width: 18px;
+    height: 18px;
+}
+.input-with-icon input { padding-left: 40px !important; }
+.login-options { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 25px; }
+.login-options a { color: var(--accent-blue); text-decoration: none; }
+/* --- CORREÇÃO: Impede a quebra de linha do "Lembrar-me" --- */
+.login-options div { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.login-box .button.primary {
+    width: 100%; padding: 12px; font-size: 16px;
+    /* --- CORREÇÃO: Cor do botão alterada para laranja --- */
+    background-color: var(--accent-orange);
+    border-color: var(--accent-orange);
+}
+.login-box .button.primary:hover { background-color: var(--accent-orange-dark); }
+.create-account-link { display: block; margin-top: 20px; color: var(--accent-blue); text-decoration: none; font-size: 14px; }
+.login-error { color: var(--accent-red); font-size: 13px; height: 20px; margin-bottom: 10px; }

@@ -7,81 +7,55 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>Portal de Devolução</title>
-    <link rel="stylesheet" href="style.css?v=finalisimo">
+    <link rel="stylesheet" href="style.css?v=login_final">
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <div class="app-container">
-        <nav class="sidebar">
-            <div class="sidebar-header">PORTAL DEVOLUÇÃO</div>
-            <ul class="menu-list">
-                <li><a href="#" class="menu-item" data-target="solicitacoes-submenu"><i data-feather="package"></i> Solicitações</a><ul id="solicitacoes-submenu" class="submenu active"><li><a href="#" class="submenu-item active" data-page="page-acompanhar">Acompanhar Solicitações</a></li><li><a href="#" class="submenu-item" data-page="page-nova-solicitacao">Nova Solicitação</a></li></ul></li>
-                <li><a href="#" class="menu-item" data-target="setores-submenu"><i data-feather="briefcase"></i> Setores</a><ul id="setores-submenu" class="submenu"><li><a href="#" class="submenu-item" data-page="page-qualidade">Qualidade</a></li><li><a href="#" class="submenu-item" data-page="page-operacional">Operação</a></li><li><a href="#" class="submenu-item" data-page="page-comercial">Comercial</a></li><li><a href="#" class="submenu-item" data-page="page-logistica-reversa">Logística Reversa</a></li></ul></li>
-                <li><a href="#" class="menu-item" data-target="acessos-submenu"><i data-feather="users"></i> Acessos</a><ul id="acessos-submenu" class="submenu"></ul></li>
-            </ul>
-        </nav>
-        <main class="main-content">
-            <header class="main-header"></header>
-            <div id="page-acompanhar" class="page active">
-                <h1 class="page-title">Acompanhar Solicitações</h1>
-                <div class="filter-area">
-                    <div class="filter-row">
-                        <div class="form-group search-group"><label for="search-input-acompanhar">Pesquisar</label><input type="text" id="search-input-acompanhar" placeholder="Pesquise por Código, Material, Cliente..."></div>
-                        <div class="form-group filter-group"><label for="filter-combo-acompanhar">Filtro</label><div class="custom-select"><select id="filter-combo-acompanhar"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option><option>Nota Fiscal</option><option>Motivo</option></select></div></div>
-                        <button class="icon-button"><i data-feather="search"></i></button><button class="icon-button" id="export-btn"><i data-feather="file-text"></i></button>
-                    </div>
-                    <div class="filter-row">
-                        <div class="form-group date-group">
-                            <label for="date-start">Data Inicial</label>
-                            <div class="custom-select">
-                                <input type="text" id="date-start">
-                            </div>
-                        </div>
-                        <div class="form-group date-group">
-                            <label for="date-end">Data Final</label>
-                            <div class="custom-select">
-                                <input type="text" id="date-end">
-                            </div>
-                        </div>
-                    </div>
+
+    <div class="login-page" id="login-page">
+        <div class="login-box">
+            <h1>Bem-vindo ao Portal de Devolução</h1>
+            <div class="form-group">
+                <label for="login-input">LOGIN</label>
+                <div class="input-with-icon">
+                    <i data-feather="user"></i>
+                    <input type="text" id="login-input" value="admin">
                 </div>
-                <div id="solicitacoes-list-acompanhar" class="solicitacoes-list"><div id="empty-message-acompanhar" class="empty-list-message">Nenhuma solicitação para exibir.</div></div>
             </div>
-            <div id="page-nova-solicitacao" class="page"></div>
-            
-            <div id="page-qualidade" class="page">
-                <h1 class="page-title">Qualidade</h1>
-                <div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-qualidade">Pesquisar</label><input type="text" id="search-input-qualidade" placeholder="Pesquise a Solicitação..."></div><div class="form-group filter-group"><label for="filter-combo-qualidade">Filtro</label><div class="custom-select"><select id="filter-combo-qualidade"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div>
-                <div id="solicitacoes-list-qualidade" class="solicitacoes-list"><div id="empty-message-qualidade" class="empty-list-message">Nenhuma solicitação para exibir.</div></div>
+            <div class="form-group">
+                <label for="password-input">SENHA</label>
+                <div class="input-with-icon">
+                    <i data-feather="lock"></i>
+                    <input type="password" id="password-input" value="admin">
+                </div>
             </div>
-            <div id="page-operacional" class="page">
-                <h1 class="page-title">Operação</h1>
-                <div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-operacional">Pesquisar</label><input type="text" id="search-input-operacional" placeholder="Pesquise a Solicitação..."></div><div class="form-group filter-group"><label for="filter-combo-operacional">Filtro</label><div class="custom-select"><select id="filter-combo-operacional"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div>
-                <div id="solicitacoes-list-operacional" class="solicitacoes-list"><div id="empty-message-operacional" class="empty-list-message">Nenhuma solicitação para exibir.</div></div>
+            <div id="login-error-message" class="login-error"></div>
+            <div class="login-options">
+                <div>
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Lembrar-me</label>
+                </div>
+                <a href="#">Esqueceu a Senha?</a>
             </div>
-            <div id="page-comercial" class="page">
-                <h1 class="page-title">Comercial</h1>
-                <div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-comercial">Pesquisar</label><input type="text" id="search-input-comercial" placeholder="Pesquise a Solicitação..."></div><div class="form-group filter-group"><label for="filter-combo-comercial">Filtro</label><div class="custom-select"><select id="filter-combo-comercial"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div>
-                <div id="solicitacoes-list-comercial" class="solicitacoes-list"><div id="empty-message-comercial" class="empty-list-message">Nenhuma solicitação para exibir.</div></div>
-            </div>
-            <div id="page-logistica-reversa" class="page">
-                <h1 class="page-title">Logística Reversa</h1>
-                <div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-logistica-reversa">Pesquisar</label><input type="text" id="search-input-logistica-reversa" placeholder="Pesquise a Solicitação..."></div><div class="form-group filter-group"><label for="filter-combo-logistica-reversa">Filtro</label><div class="custom-select"><select id="filter-combo-logistica-reversa"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div>
-                <div id="solicitacoes-list-logistica-reversa" class="solicitacoes-list"><div id="empty-message-logistica-reversa" class="empty-list-message">Nenhuma solicitação para exibir.</div></div>
-            </div>
-            
-            <div class="modal-overlay" id="cart-modal-overlay"></div>
-            <div class="modal-overlay" id="image-modal-overlay"></div>
-        </main>
+            <button class="button primary" id="login-btn">Entrar</button>
+            <a href="#" class="create-account-link">Criar uma conta</a>
+        </div>
     </div>
+    
+    <div class="app-container" id="app-container" style="display: none;">
+        </div>
+
+    <div class="modal-overlay" id="cart-modal-overlay"></div>
+    <div class="modal-overlay" id="image-modal-overlay"></div>
+
     <script type="text/javascript" src="/eel.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
-    <script src="js/app.js?v=finalissimo"></script>
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=login_final"></script>
+
     <script>
-        document.getElementById('page-nova-solicitacao').innerHTML = `<div class="page-header"><h1 class="page-title">Nova Solicitação</h1><div class="cart-icon-wrapper" id="cart-icon"><i data-feather="shopping-cart"></i><span class="cart-counter" id="cart-counter">0</span></div></div><div class="consulta-nf-area"><div class="form-group"><label for="nf-input">Nota Fiscal</label><input type="text" id="nf-input" placeholder="Digite o nº da NF"></div><button class="button" id="consultar-nf-btn">Consultar</button></div><div id="nf-results-area"></div>`;
+        document.querySelector('.app-container').innerHTML = `<nav class="sidebar"><div class="sidebar-header">PORTAL DEVOLUÇÃO</div><ul class="menu-list"><li><a class="menu-item" data-target="solicitacoes-submenu" href="#"><i data-feather="package"></i> Solicitações</a><ul class="submenu active" id="solicitacoes-submenu"><li><a class="submenu-item active" data-page="page-acompanhar" href="#">Acompanhar Solicitações</a></li><li><a class="submenu-item" data-page="page-nova-solicitacao" href="#">Nova Solicitação</a></li></ul></li><li><a class="menu-item" data-target="setores-submenu" href="#"><i data-feather="briefcase"></i> Setores</a><ul class="submenu" id="setores-submenu"><li><a class="submenu-item" data-page="page-qualidade" href="#">Qualidade</a></li><li><a class="submenu-item" data-page="page-operacional" href="#">Operação</a></li><li><a class="submenu-item" data-page="page-comercial" href="#">Comercial</a></li><li><a class="submenu-item" data-page="page-logistica-reversa" href="#">Logística Reversa</a></li></ul></li><li><a class="menu-item" data-target="ferramentas-submenu" href="#"><i data-feather="tool"></i> Ferramentas</a><ul class="submenu" id="ferramentas-submenu"><li><a class="submenu-item" data-page="page-macros" href="#">Macros</a></li></ul></li><li><a class="menu-item" data-target="acessos-submenu" href="#"><i data-feather="users"></i> Acessos</a><ul class="submenu" id="acessos-submenu"></ul></li></ul></nav><main class="main-content"><header class="main-header"></header><div class="page active" id="page-acompanhar"><h1 class="page-title">Acompanhar Solicitações</h1><div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-acompanhar">Pesquisar</label><input placeholder="Pesquise por Código, Material, Cliente..." id="search-input-acompanhar" type="text"></div><div class="form-group filter-group"><label for="filter-combo-acompanhar">Filtro</label><div class="custom-select"><select id="filter-combo-acompanhar"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option><option>Nota Fiscal</option><option>Motivo</option></select></div></div><button class="icon-button" id="search-btn-acompanhar"><i data-feather="search"></i></button><button class="icon-button" id="export-btn"><i data-feather="file-text"></i></button></div><div class="filter-row"><div class="form-group date-group"><label for="date-start">Data Inicial</label><div class="custom-select"><input id="date-start" type="text"></div></div><div class="form-group date-group"><label for="date-end">Data Final</label><div class="custom-select"><input id="date-end" type="text"></div></div></div></div><div class="solicitacoes-list" id="solicitacoes-list-acompanhar"><div class="empty-list-message" id="empty-message-acompanhar">Nenhuma solicitação para exibir.</div></div></div><div class="page" id="page-nova-solicitacao"><div class="page-header"><h1 class="page-title">Nova Solicitação</h1><div class="cart-icon-wrapper" id="cart-icon"><i data-feather="shopping-cart"></i><span class="cart-counter" id="cart-counter">0</span></div></div><div class="consulta-nf-area"><div class="form-group"><label for="nf-input">Nota Fiscal</label><input placeholder="Digite o nº da NF" id="nf-input" type="text"></div><button class="button" id="consultar-nf-btn">Consultar</button></div><div id="nf-results-area"></div></div><div class="page" id="page-qualidade"><h1 class="page-title">Qualidade</h1><div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-qualidade">Pesquisar</label><input placeholder="Pesquise a Solicitação..." id="search-input-qualidade" type="text"></div><div class="form-group filter-group"><label for="filter-combo-qualidade">Filtro</label><div class="custom-select"><select id="filter-combo-qualidade"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button" id="search-btn-qualidade"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div><div class="solicitacoes-list" id="solicitacoes-list-qualidade"><div class="empty-list-message" id="empty-message-qualidade">Nenhuma solicitação para exibir.</div></div></div><div class="page" id="page-operacional"><h1 class="page-title">Operação</h1><div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-operacional">Pesquisar</label><input placeholder="Pesquise a Solicitação..." id="search-input-operacional" type="text"></div><div class="form-group filter-group"><label for="filter-combo-operacional">Filtro</label><div class="custom-select"><select id="filter-combo-operacional"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button" id="search-btn-operacional"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div><div class="solicitacoes-list" id="solicitacoes-list-operacional"><div class="empty-list-message" id="empty-message-operacional">Nenhuma solicitação para exibir.</div></div></div><div class="page" id="page-comercial"><h1 class="page-title">Comercial</h1><div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-comercial">Pesquisar</label><input placeholder="Pesquise a Solicitação..." id="search-input-comercial" type="text"></div><div class="form-group filter-group"><label for="filter-combo-comercial">Filtro</label><div class="custom-select"><select id="filter-combo-comercial"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button" id="search-btn-comercial"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div><div class="solicitacoes-list" id="solicitacoes-list-comercial"><div class="empty-list-message" id="empty-message-comercial">Nenhuma solicitação para exibir.</div></div></div><div class="page" id="page-logistica-reversa"><h1 class="page-title">Logística Reversa</h1><div class="filter-area"><div class="filter-row"><div class="form-group search-group"><label for="search-input-logistica-reversa">Pesquisar</label><input placeholder="Pesquise a Solicitação..." id="search-input-logistica-reversa" type="text"></div><div class="form-group filter-group"><label for="filter-combo-logistica-reversa">Filtro</label><div class="custom-select"><select id="filter-combo-logistica-reversa"><option>Código de Solicitação</option><option>Material</option><option>Cliente</option></select></div></div><button class="icon-button" id="search-btn-logistica-reversa"><i data-feather="search"></i></button><button class="icon-button export-btn-setor"><i data-feather="file-text"></i></button></div></div><div class="solicitacoes-list" id="solicitacoes-list-logistica-reversa"><div class="empty-list-message" id="empty-message-logistica-reversa">Nenhuma solicitação para exibir.</div></div></div><div class="page" id="page-macros"><h1 class="page-title">Executar Macro</h1><div class="card-summary" style="cursor: default; flex-direction: column; align-items: flex-start; gap: 20px;"><p>Clique no botão abaixo para iniciar a macro VBA na planilha <strong>MinhaPlanilha.xlsm</strong>.</p><button class="button primary" id="iniciar-macro-btn">Iniciar Macro</button><div id="macro-status" style="margin-top: 10px;"></div></div></div></main>`;
         document.getElementById('cart-modal-overlay').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Carrinho</h2><button class="close-modal-btn" id="close-cart-btn"><i data-feather="x"></i></button></div><div class="modal-body" id="cart-items-list"></div><div class="modal-footer"><button class="button cancel" id="cancelar-carrinho-btn">CANCELAR</button><button class="button primary" id="finalizar-btn">FINALIZAR</button></div></div>`;
         document.getElementById('image-modal-overlay').innerHTML = `<div class="image-modal-content"><button class="close-modal-btn" id="close-image-btn"><i data-feather="x"></i></button><img id="modal-image" src="" alt="Imagem Ampliada"></div>`;
     </script>

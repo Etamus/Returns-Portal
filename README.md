@@ -49,8 +49,8 @@ Este sistema permite registrar, acompanhar e gerenciar solicitações de devolu�
 ### Instalação
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/SEU-USUARIO/returns-portal-logistics.git
-   cd returns-portal-logistics
+   git clone https://github.com/Etamus/Returns-Portal.git
+   cd Returns-Portal
    ```
 
 3.  Crie um ambiente virtual e instale as dependências:
